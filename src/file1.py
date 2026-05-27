@@ -18,8 +18,8 @@ y = wine.target
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.10, random_state=42)
 
 # Define the params for RF model
-max_depth = 50
-n_estimators = 20
+max_depth = 10
+n_estimators = 2
 
 # Mention your experiment below
 mlflow.set_experiment('MLOPs Experiment 2')
@@ -67,6 +67,11 @@ with mlflow.start_run(): #inside we can also have the "experiment_id = " paramet
     
     mlflow.log_artifact("Confusion_matrix.png")
     mlflow.log_artifact(__file__) #logging the current file
-
-
+    #setting tags - tags can be set like dictionaries also
+    #mlflow.set_tags({"Author" : "Darshan", "Project" : "Wine classifications"})
+    mlflow.set_tag("Author", "Darshan")
+    
+    #now logging the model
+    mlflow.sklearn.log_model(rf, "Random-Forest-Model")
+    
     print(accuracy)
